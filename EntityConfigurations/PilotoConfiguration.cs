@@ -19,8 +19,15 @@ public class PilotoConfiguration : IEntityTypeConfiguration<Piloto>
         builder.Property(p => p.Matricula)
                .IsRequired()
                .HasMaxLength(10);
-
+               
         builder.HasIndex(p => p.Matricula)
                .IsUnique();
+
+        builder.HasIndex(p => p.Registro)
+               .IsUnique();
+
+        PropertyBuilder<string> propertyBuilder1 = builder.Property(p => p.CPF)
+                       .IsRequired()
+                       .HasMaxLength(11);
     }
 }

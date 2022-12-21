@@ -103,7 +103,10 @@ public class VooService
             (
                 voo.Piloto.Id,
                 voo.Piloto.Nome,
-                voo.Piloto.Matricula
+                voo.Piloto.Matricula,
+                voo.Piloto.Registro,
+                voo.Piloto.CPF,
+                voo.Piloto.Curso
             );
 
             if (voo.Cancelamento != null)

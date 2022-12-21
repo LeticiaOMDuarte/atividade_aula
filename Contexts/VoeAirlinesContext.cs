@@ -18,6 +18,7 @@ public class VoeAirlinesContext: DbContext
     public DbSet<Voo> Voos => Set<Voo>();
     public DbSet<Cancelamento> Cancelamentos => Set<Cancelamento>();
     public DbSet<Manutencao> Manutencoes => Set<Manutencao>();
+    public DbSet<Login> Logins => Set<Login>();
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -31,5 +32,6 @@ public class VoeAirlinesContext: DbContext
         modelBuilder.ApplyConfiguration(new VooConfiguration());
         modelBuilder.ApplyConfiguration(new CancelamentoConfiguration());
         modelBuilder.ApplyConfiguration(new ManutencaoConfiguration());
+        modelBuilder.ApplyConfiguration(new LoginConfiguration());
     }
 }

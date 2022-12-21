@@ -25,13 +25,13 @@ public class PilotoService
     {
         _adicionarPilotoValidator.ValidateAndThrow(dados);
 
-        var piloto = new Piloto(dados.Nome, dados.Matricula);
+        var piloto = new Piloto(dados.Nome, dados.Matricula, dados.Registro, dados.CPF, dados.Curso);
 
         _context.Add(piloto);
         _context.SaveChanges();
 
-        return new DetalhesPilotoViewModel(piloto.Id, piloto.Nome, piloto.Matricula);
-    } 
+        return new DetalhesPilotoViewModel(piloto.Id, piloto.Nome, piloto.Matricula, piloto.Registro, piloto.CPF, piloto.Curso);
+    }
 
     public IEnumerable<ListarPilotoViewModel> ListarPilotos()
     {
@@ -44,10 +44,15 @@ public class PilotoService
 
         if (piloto != null)
         {
-            return new DetalhesPilotoViewModel(piloto.Id, piloto.Nome, piloto.Matricula);
+            return NewMethod(piloto);
         }
 
         return null;
+    }
+
+    private static DetalhesPilotoViewModel NewMethod(Piloto piloto)
+    {
+        return new DetalhesPilotoViewModel(piloto.Id, piloto.Nome, piloto.Matricula, piloto.Registro, piloto.CPF, piloto.Curso);
     }
 
     public DetalhesPilotoViewModel? AtualizarPiloto(AtualizarPilotoViewModel dados)
@@ -56,18 +61,20 @@ public class PilotoService
 
         var piloto = _context.Pilotos.Find(dados.Id);
 
-        if (piloto != null)
+        if (piloto == null)
         {
-            piloto.Nome = dados.Nome;
-            piloto.Matricula = dados.Matricula;
-
-            _context.Update(piloto);
-            _context.SaveChanges();
-
-            return new DetalhesPilotoViewModel(piloto.Id, piloto.Nome, piloto.Matricula);
+            return null;
         }
+        piloto.Nome = dados.Nome;
+        piloto.Matricula = dados.Matricula;
+        piloto.Registro = dados.Registro;
+        piloto.CPF = dados.CPF;
+        piloto.Curso = dados.Curso;
 
-        return null;
+        _context.Update(piloto);
+        _context.SaveChanges();
+
+        return new DetalhesPilotoViewModel(piloto.Id, piloto.Nome, piloto.Matricula, piloto.Registro, piloto.CPF, piloto.Curso);
     }
 
     public void ExcluirPiloto(int id)
